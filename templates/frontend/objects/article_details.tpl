@@ -64,7 +64,7 @@
  *   included with published submissions.
  * @uses $ccLicenseBadge string An image and text with details about the license
  *}
-<article class="obj_article_details"><h1>EU ESTOU AQUI</h1>
+<article class="obj_article_details">
 
 	{* Notification that this is an old version *}
 	{if $currentPublication->getId() !== $publication->getId()}
@@ -74,7 +74,7 @@
 				datePublished=$publication->getData('datePublished')|date_format:$dateFormatShort
 				urlRecentVersion=$latestVersionUrl|escape
 			}
-		</div> estouaqui
+		</div>
 	{/if}
 
 	<h1 class="page_title">
@@ -114,7 +114,7 @@
 							{/if}
 						</li>
 					{/foreach}
-					</ul>
+					
 				</section>
 			{/if}
 
@@ -137,6 +137,51 @@
 							</a>
 						</span>
 					</section>
+
+					
+					
+					<hr>
+					<h4>Tradução:</h4>
+					
+					{$doiUrl2 = "ola"}
+				
+					
+					<section class="item doi 2">
+						
+						<h2 class="label">
+							{capture assign=translatedDOI}{translate key="plugins.pubIds.doi.readerDisplayName"}{/capture}
+							{translate key="semicolon" label=$translatedDOI}
+						</h2>
+						<span class="value">
+							<a href="http://0.0.0.0:8888/index.php/zero/article/view/1/2">
+								{$doiUrl2} 
+							</a>
+						</span>
+					</section>
+						
+						
+					<hr>
+					<h4>Outros arquivos:</h4>
+										
+					{$doiUrl3 = "outros"}
+				
+					
+					<section class="item doi 2">
+						
+						<h2 class="label">
+							{capture assign=translatedDOI}{translate key="plugins.pubIds.doi.readerDisplayName"}{/capture}
+							{translate key="semicolon" label=$translatedDOI}
+						</h2>
+						<span class="value">
+							<a href="http://0.0.0.0:8888/index.php/zero/article/view/1/2">
+								{$doiUrl3} 
+							</a>
+						</span>
+					</section>
+						
+						
+					<hr>
+					
 				{/if}
 			{/foreach}
 
