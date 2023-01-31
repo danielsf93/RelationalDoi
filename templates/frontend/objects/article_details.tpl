@@ -143,8 +143,13 @@
 					<hr>
 					<h4>Tradução:</h4>
 					
-					{$doiUrl2 = "ola"}
 				
+				
+				
+				{/if}
+				{assign var=pubId value=$article->getStoredPubId($pubIdPlugin->getPubIdType())}
+				{if $pubId}
+					{assign var="doiUrl2" value=$pubIdPlugin->getResolvingURL($currentJournal->getId(), $pubId)|escape}
 					
 					<section class="item doi 2">
 						
@@ -153,8 +158,9 @@
 							{translate key="semicolon" label=$translatedDOI}
 						</h2>
 						<span class="value">
-							<a href="http://0.0.0.0:8888/index.php/zero/article/view/1/2">
-								{$doiUrl2} 
+							<a href={$doiUrl2}link_do_pdf_galley>
+								{$doiUrl }RESTANTE-DO-LINK
+								
 							</a>
 						</span>
 					</section>
@@ -203,7 +209,7 @@
 			{* Abstract *}
 			{if $publication->getLocalizedData('abstract')}
 				<section class="item abstract">
-					<h2 class="label">{translate key="article.abstract"}</h2>
+					<h2 class="label">{translate key="article.abstract"}</h2>ronaldo
 					{$publication->getLocalizedData('abstract')|strip_unsafe_html}
 				</section>
 			{/if}
