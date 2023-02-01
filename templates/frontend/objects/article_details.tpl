@@ -116,6 +116,18 @@
 					{/foreach}
 					
 				</section>
+				
+									{** ----------------
+						
+						
+						
+						aqui se forma o doi do view 
+						
+						
+						
+						--------------------------- *}
+				
+				
 			{/if}
 
 			{* DOI (requires plugin) *}
@@ -126,7 +138,18 @@
 				{assign var=pubId value=$article->getStoredPubId($pubIdPlugin->getPubIdType())}
 				{if $pubId}
 					{assign var="doiUrl" value=$pubIdPlugin->getResolvingURL($currentJournal->getId(), $pubId)|escape}
-					<section class="item doi">
+					
+										{** ----------------
+						
+						
+						
+						aqui fica e mostra o doi do view
+						
+						
+						
+						--------------------------- *}
+					
+					<section class="item doi">oi
 						<h2 class="label">
 							{capture assign=translatedDOI}{translate key="plugins.pubIds.doi.readerDisplayName"}{/capture}
 							{translate key="semicolon" label=$translatedDOI}
@@ -141,6 +164,17 @@
 					
 					
 					<hr>
+					
+					{** ------------------
+						
+						
+						
+						 aqui ficam os pdfs, galley, o original e a tradução 
+						 
+						 
+						 
+						 ------------------- *}
+					
 					<h4>Tradução:</h4>
 					
 				
@@ -167,9 +201,34 @@
 						
 						
 					<hr>
+					{** ----------------
+						
+						
+						
+						aqui ficam os outros arquivos, jpg, png, html 
+						
+						
+						
+						--------------------------- *}
+					
+					
 					<h4>Outros arquivos:</h4>
 										
 					{$doiUrl3 = "outros"}
+				
+				
+				
+				<ul class="value supplementary_galleys_links">
+						{foreach from=$supplementaryGalleys item=galley}
+							<li>
+								{include file="frontend/objects/galley_link.tpl" parent=$article publication=$publication galley=$galley isSupplementary="1"}ola
+							</li>
+						{/foreach}
+					</ul>
+				
+				
+				
+				
 				
 					
 					<section class="item doi 2">
