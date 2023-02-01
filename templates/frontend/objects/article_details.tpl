@@ -1,13 +1,6 @@
 {**
  * templates/frontend/objects/article_details.tpl
  *
- * Copyright (c) 2014-2020 Simon Fraser University
- * Copyright (c) 2003-2020 John Willinsky
- * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
- *
- * @brief View of an Article which displays all details about the article.
- *  Expected to be primary object on the page.
- *
  * Many journals will want to add custom data to this object, either through
  * plugins which attach to hooks on the page or by editing the template
  * themselves. In order to facilitate this, a flexible layout markup pattern has
@@ -149,7 +142,7 @@
 						
 						--------------------------- *}
 					
-					<section class="item doi">oi
+					<section class="item doi"> doi do artigo, do view
 						<h2 class="label">
 							{capture assign=translatedDOI}{translate key="plugins.pubIds.doi.readerDisplayName"}{/capture}
 							{translate key="semicolon" label=$translatedDOI}
@@ -169,14 +162,25 @@
 						
 						
 						
-						 aqui ficam os pdfs, galley, o original e a tradução 
+						 aqui ficam os pdfs, galley, o original e a tradução, cada um tem um doi independente do doi do view
+						 
+						 
 						 
 						 
 						 
 						 ------------------- *}
 					
-					<h4>Tradução:</h4>
+					<h4>Tradução dois dos pdfs galley:</h4>
 					
+				
+				<ul class="value galleys_links">numero01
+						{foreach from=$primaryGalleys item=galley}
+							<li>
+								{include file="frontend/objects/galley_link.tpl" parent=$article publication=$publication galley=$galley purchaseFee=$currentJournal->getData('purchaseArticleFee') purchaseCurrency=$currentJournal->getData('currency')}
+							</li>
+						{/foreach}
+					</ul>
+				
 				
 				
 				
@@ -205,7 +209,7 @@
 						
 						
 						
-						aqui ficam os outros arquivos, jpg, png, html 
+						aqui ficam os outros arquivos, jpg, png, html, também com doi independente 
 						
 						
 						
