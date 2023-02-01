@@ -114,7 +114,7 @@
 						
 						
 						
-						aqui se forma o doi do view 
+						aqui se forma o doi do view, nessa parte não precisa mudar nada
 						
 						
 						
@@ -157,6 +157,8 @@
 					
 					
 					<hr>
+					
+					{** mudanças a partir daqui *}
 					
 					{** ------------------
 						
@@ -248,8 +250,12 @@
 						</span>
 					</section>
 						
-						
+						finish
 					<hr>
+					
+					
+					{** mudanças até aqui *}
+					
 					
 				{/if}
 			{/foreach}
