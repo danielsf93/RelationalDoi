@@ -209,7 +209,7 @@
 			{* Abstract *}
 			{if $publication->getLocalizedData('abstract')}
 				<section class="item abstract">
-					<h2 class="label">{translate key="article.abstract"}</h2>ronaldo
+					<h2 class="label">{translate key="article.abstract"}</h2>
 					{$publication->getLocalizedData('abstract')|strip_unsafe_html}
 				</section>
 			{/if}
@@ -300,7 +300,7 @@
 					<h2 class="pkp_screen_reader">
 						{translate key="submission.downloads"}
 					</h2>
-					<ul class="value galleys_links">
+					<ul class="value galleys_links">numero01
 						{foreach from=$primaryGalleys item=galley}
 							<li>
 								{include file="frontend/objects/galley_link.tpl" parent=$article publication=$publication galley=$galley purchaseFee=$currentJournal->getData('purchaseArticleFee') purchaseCurrency=$currentJournal->getData('currency')}
@@ -325,7 +325,7 @@
 			{/if}
 
 			{if $publication->getData('datePublished')}
-			<div class="item published">
+			<div class="item published">numero02
 				<section class="sub_item">
 					<h2 class="label">
 						{translate key="submissions.published"}
