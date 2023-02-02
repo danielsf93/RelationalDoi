@@ -110,15 +110,7 @@
 					
 				</section>
 				
-									{** ----------------
-						
-						
-						
-						aqui se forma o doi do view, nessa parte não precisa mudar nada
-						
-						
-						
-						--------------------------- *}
+{** find00: para entender: aqui se forma o doi do view, nessa parte não precisa mudar nada *}
 				
 				
 			{/if}
@@ -132,19 +124,11 @@
 				{if $pubId}
 					{assign var="doiUrl" value=$pubIdPlugin->getResolvingURL($currentJournal->getId(), $pubId)|escape}
 					
-										{** ----------------
-						
-						
-						
-						aqui fica e mostra o doi do view
-						
-						
-						
-						--------------------------- *}
+{** find01: aqui fica e mostra o doi do view *}
 					
-					<section class="item doi"> doi do artigo, do view
+					<section class="item doi">
 						<h2 class="label">
-							{capture assign=translatedDOI}{translate key="plugins.pubIds.doi.readerDisplayName"}{/capture}
+							{capture assign=translatedDOI}{translate key="plugins.pubIds.doi.readerDisplayName"} do Artigo{/capture}
 							{translate key="semicolon" label=$translatedDOI}
 						</h2>
 						<span class="value">
@@ -155,123 +139,71 @@
 					</section>
 
 					
+{** find02: mudanças a partir daqui. Aqui ficam os pdfs, galley, o original e a tradução, 
+	cada um tem um doi independente do doi do view *}
 					
-					<hr>
-					
-					{** mudanças a partir daqui *}
-					
-					{** ------------------
-						
-						
-						
-						 aqui ficam os pdfs, galley, o original e a tradução, cada um tem um doi independente do doi do view
-						 
-						 
-						 
-						 
-						 
-						 ------------------- *}
-					
-					<h4>Tradução dois dos pdfs galley:</h4>
+					<h4>Arquivo principal e traduções:</h4>
 					
 				
 				<ul class="value galleys_links">
 						{foreach from=$primaryGalleys item=galley}
 						
-						qqqqqqqq
+						
 							<li>
-								
-							{include file="frontend/objects/galley_link.tpl" parent=$article publication=$publication galley=$galley isSupplementary="1"}ola
+								{$ccc = "vaivai"}
+							{include file="frontend/objects/galley_link.tpl" parent=$article publication=$publication galley=$galley isSupplementary="1"}
 							<section class="item doi"> 
 					<h2 class="label">
-							{capture assign=translatedDOI}Pdf 01 {/capture}
-							{translate key="semicolon" label=$translatedDOI}
+							{capture assign=translatedDOI}DOI{/capture}
+							{translate key="semicolon" label=$translatedDOI} 
 						</h2>
 						
 						{$senha = "senhaa"}
 						
 						<span class="value">
-							<a href="{$doiUrl}{$senha}">
-								{$doiUrl}{$senha}
+							
+							<a href="{$galley->getBestGalleyId()|escape}">
+
+								{$doiUrl}.g{$galley->getBestGalleyId()|escape}
+								
 							</a>
 						</span>
 					</section>
-							
-							
-							qqqqqqqqqqqqq
 							</li>
 						{/foreach}
 					</ul>
-				
-				
-				
-				
-				
-				
-				
-				
-			
-				
-				
-				passando aqui só pra vc me ver
-				
-				
-				
-				
-				
-				
-					{** ----------------
-						
-						
-						
-						aqui ficam os outros arquivos, jpg, png, html, também com doi independente 
-						
-						
-						
-						--------------------------- *}
+
+{** find03: aqui ficam os outros arquivos, jpg, png, html, também com doi independente *}
 					
-					<hr>
+				
 					<h4>Outros arquivos:</h4>
 										
-					{$doiUrl3 = "outros"}
-				
-				
-				
-				<ul class="value supplementary_galleys_links">
-						{foreach from=$supplementaryGalleys item=galley}
-							<li>
-								{include file="frontend/objects/galley_link.tpl" parent=$article publication=$publication galley=$galley isSupplementary="1"}ola
-							</li>
-						{/foreach}
-					</ul>
-				
-				
-				
-				
-				
-					
-					<section class="item doi 2">
+<ul class="value supplementary_galleys_links">
+{foreach from=$supplementaryGalleys item=galley}
+<li>
+{include file="frontend/objects/galley_link.tpl" parent=$article publication=$publication galley=$galley isSupplementary="1"}
+<section class="item doi 2">
+<h2 class="label">
+{capture assign=translatedDOI}{translate key="plugins.pubIds.doi.readerDisplayName"}{/capture}
+{translate key="semicolon" label=$translatedDOI}
+</h2>
+<span class="value">
+<a href="{$galley->getBestGalleyId()|escape}">
+{$doiUrl}.g{$galley->getBestGalleyId()|escape} 
+</a>
+</span>
+</section>
+{/foreach}
+</li>
+</ul>
 						
-						<h2 class="label">
-							{capture assign=translatedDOI}{translate key="plugins.pubIds.doi.readerDisplayName"}{/capture}
-							{translate key="semicolon" label=$translatedDOI}
-						</h2>
-						<span class="value">
-							<a href="http://0.0.0.0:8888/index.php/zero/article/view/1/2">
-								{$doiUrl3} 
-							</a>
-						</span>
-					</section>
-						
-						finish
-					<hr>
-					
-					
-					{** mudanças até aqui *}
+
 					
 					
 				{/if}
 			{/foreach}
+
+{** find04: não editar nada a partir daqui*}
 
 			{* Keywords *}
 			{if !empty($publication->getLocalizedData('keywords'))}
@@ -382,7 +314,7 @@
 					<h2 class="pkp_screen_reader">
 						{translate key="submission.downloads"}
 					</h2>
-					<ul class="value galleys_links">numero01
+					<ul class="value galleys_links">
 						{foreach from=$primaryGalleys item=galley}
 							<li>
 								{include file="frontend/objects/galley_link.tpl" parent=$article publication=$publication galley=$galley purchaseFee=$currentJournal->getData('purchaseArticleFee') purchaseCurrency=$currentJournal->getData('currency')}
@@ -407,7 +339,7 @@
 			{/if}
 
 			{if $publication->getData('datePublished')}
-			<div class="item published">numero02
+			<div class="item published">
 				<section class="sub_item">
 					<h2 class="label">
 						{translate key="submissions.published"}
