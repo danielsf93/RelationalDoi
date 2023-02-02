@@ -175,10 +175,30 @@
 					<h4>Tradução dois dos pdfs galley:</h4>
 					
 				
-				<ul class="value galleys_links">numero01
+				<ul class="value galleys_links">
 						{foreach from=$primaryGalleys item=galley}
+						
+						qqqqqqqq
 							<li>
-								{include file="frontend/objects/galley_link.tpl" parent=$article publication=$publication galley=$galley purchaseFee=$currentJournal->getData('purchaseArticleFee') purchaseCurrency=$currentJournal->getData('currency')}
+								
+							{include file="frontend/objects/galley_link.tpl" parent=$article publication=$publication galley=$galley isSupplementary="1"}ola
+							<section class="item doi"> 
+					<h2 class="label">
+							{capture assign=translatedDOI}Pdf 01 {/capture}
+							{translate key="semicolon" label=$translatedDOI}
+						</h2>
+						
+						{$senha = "senhaa"}
+						
+						<span class="value">
+							<a href="{$doiUrl}{$senha}">
+								{$doiUrl}{$senha}
+							</a>
+						</span>
+					</section>
+							
+							
+							qqqqqqqqqqqqq
 							</li>
 						{/foreach}
 					</ul>
@@ -186,27 +206,20 @@
 				
 				
 				
-				{/if}
-				{assign var=pubId value=$article->getStoredPubId($pubIdPlugin->getPubIdType())}
-				{if $pubId}
-					{assign var="doiUrl2" value=$pubIdPlugin->getResolvingURL($currentJournal->getId(), $pubId)|escape}
-					
-					<section class="item doi 2">
-						
-						<h2 class="label">
-							{capture assign=translatedDOI}{translate key="plugins.pubIds.doi.readerDisplayName"}{/capture}
-							{translate key="semicolon" label=$translatedDOI}
-						</h2>
-						<span class="value">
-							<a href={$doiUrl2}link_do_pdf_galley>
-								{$doiUrl }RESTANTE-DO-LINK
-								
-							</a>
-						</span>
-					</section>
-						
-						
-					<hr>
+				
+				
+				
+				
+			
+				
+				
+				passando aqui só pra vc me ver
+				
+				
+				
+				
+				
+				
 					{** ----------------
 						
 						
@@ -217,7 +230,7 @@
 						
 						--------------------------- *}
 					
-					
+					<hr>
 					<h4>Outros arquivos:</h4>
 										
 					{$doiUrl3 = "outros"}
