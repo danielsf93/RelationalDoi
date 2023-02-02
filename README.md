@@ -1,6 +1,6 @@
 ***RelationalDoi***
 
-Este Plugin depende diretamento do Pugin DOI (nativo) e auxiliará na exportação de DOI's de arquivos independentes (galley) para a Crossref.
+Este Plugin depende diretamente do Pugin DOI (nativo) e auxiliará na exportação de DOI's de arquivos independentes (galley) para a Crossref.
 
 Generic Plugin para mostrar os DOI's relacionados de cada arquivo independente (galley).
 Mostra os DOI's de arquivo de qualquer extensão.
@@ -14,6 +14,18 @@ Prints de exemplos:
 
 ![image](https://user-images.githubusercontent.com/114300053/216448521-00e61bd0-2b5e-4f8b-adad-ea37d81712ea.png)
 
+
+O arquivo /templates/frontend/objects/article_details.tpl tem os pontos de edição marcados em seu código da seguinte forma:
+
+{** find00: para entender: aqui se forma o doi do view, nessa parte não precisa mudar nada *}
+
+{** find01: aqui fica e mostra o doi do view *}
+
+{** find02: mudanças a partir daqui. Aqui ficam os pdfs, galley, o original e a tradução, cada um tem um doi independente do doi do view *}
+
+{** find03: aqui ficam os outros arquivos, jpg, png, html, também com doi independente *}
+
+{** find04: não editar nada a partir daqui*}
 
 
 
