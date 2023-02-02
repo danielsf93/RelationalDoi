@@ -1,11 +1,16 @@
 ***RelationalDoi***
 
+
+publicname = "Relational DOI"
+
+
+
 Este Plugin depende diretamente do Pugin DOI (nativo) e auxiliará na exportação de DOI's de arquivos independentes (galley) para a Crossref.
 
 Generic Plugin para mostrar os DOI's relacionados de cada arquivo independente (galley).
 Mostra os DOI's de arquivo de qualquer extensão.
 Faltam algumas correções, mas a maior parte está feita. 
-É necessário testar utilizado diferentes configurações do plugin DOI (sintáse da construção de DOI) para ver como se comporta.
+É necessário testar utilizado diferentes configurações do plugin DOI (sintáse da construção de DOI e sufixo) para ver como se comporta.
 
 Prints de exemplos:
 
@@ -27,5 +32,16 @@ O arquivo /templates/frontend/objects/article_details.tpl tem os pontos de ediç
 
 {** find04: não editar nada a partir daqui*}
 
+***Atenção***
+Além de ser necessário testes com outras sintáses da construção de DOI, o plugin atual para criar o link e referencia-lo funciona com a regra:
 
+""<span class="value">
+			<a href="{$doiUrl}.g{$galley->getBestGalleyId()|escape}">
+                {$doiUrl}.g{$galley->getBestGalleyId()|escape}
+       </a>
+</span>""
+
+sendo o ".g" funcional apenas para a configuração padrão de SUFIXO do Plugin DOI quando configurado da seguinte forma:
+
+![image](https://user-images.githubusercontent.com/114300053/216457698-7de5c12d-e5d7-478d-935e-7a7b547e2504.png)
 
