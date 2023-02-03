@@ -1,6 +1,19 @@
 ***RelationalDoi***
 
 
+
+
+instalação
+# cd ojs-3.2.1-1/plugins/generic/relationalDoi/
+-Instlar o plugin nas configurações do portal(/index.php/index/admin/settings)
+-Instalar o plugin nas configurações da revista
+-Em /ojs-3.2.1-1 dar o seguinte comando:
+# php tools/upgrade.php upgrade
+-Na administração do site (index.php/index/admin) limpar om cachê de template
+
+
+
+
 publicname = "Relational DOI"
 
 
