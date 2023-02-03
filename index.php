@@ -1,3 +1,3 @@
 <?php
-require_once('RelationalDoi.php');
-return new RelationalDoi();
+require_once('relationalDoi.php');
+return new relationalDoi();
