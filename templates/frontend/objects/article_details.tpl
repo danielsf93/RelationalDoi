@@ -1,14 +1,6 @@
 {**
  * templates/frontend/objects/article_details.tpl
  *
- * Many journals will want to add custom data to this object, either through
- * plugins which attach to hooks on the page or by editing the template
- * themselves. In order to facilitate this, a flexible layout markup pattern has
- * been implemented. If followed, plugins and other content can provide markup
- * in a way that will render consistently with other items on the page. This
- * pattern is used in the .main_entry column and the .entry_details column. It
- * consists of the following:
- *
  * <!-- Wrapper class which provides proper spacing between components -->
  * <div class="item">
  *     <!-- Title/value combination -->
@@ -35,27 +27,6 @@
  * <div class="item">
  *     <div class="value">Whatever you'd like</div>
  * </div>
- *
- * Core components are produced manually below, but can also be added via
- * plugins using the hooks provided:
- *
- * Templates::Article::Main
- * Templates::Article::Details
- *
- * @uses $article Submission This article
- * @uses $publication Publication The publication being displayed
- * @uses $firstPublication Publication The first published version of this article
- * @uses $currentPublication Publication The most recently published version of this article
- * @uses $issue Issue The issue this article is assigned to
- * @uses $section Section The journal section this article is assigned to
- * @uses $primaryGalleys array List of article galleys that are not supplementary or dependent
- * @uses $supplementaryGalleys array List of article galleys that are supplementary
- * @uses $keywords array List of keywords assigned to this article
- * @uses $pubIdPlugins Array of pubId plugins which this article may be assigned
- * @uses $licenseTerms string License terms.
- * @uses $licenseUrl string URL to license. Only assigned if license should be
- *   included with published submissions.
- * @uses $ccLicenseBadge string An image and text with details about the license
  *}
 <article class="obj_article_details">
 
@@ -65,24 +36,19 @@
 			{capture assign="latestVersionUrl"}{url page="article" op="view" path=$article->getBestId()}{/capture}
 			{translate key="submission.outdatedVersion"
 				datePublished=$publication->getData('datePublished')|date_format:$dateFormatShort
-				urlRecentVersion=$latestVersionUrl|escape
-			}
+				urlRecentVersion=$latestVersionUrl|escape		}
 		</div>
 	{/if}
-
 	<h1 class="page_title">
 		{$publication->getLocalizedTitle()|escape}
 	</h1>
-
 	{if $publication->getLocalizedData('subtitle')}
 		<h2 class="subtitle">
 			{$publication->getLocalizedData('subtitle')|escape}
 		</h2>
 	{/if}
-
 	<div class="row">
 		<div class="main_entry">
-
 			{if $publication->getData('authors')}
 				<section class="item authors">
 					<h2 class="pkp_screen_reader">{translate key="article.authors"}</h2>
@@ -108,13 +74,8 @@
 						</li>
 					{/foreach}
 					
-				</section>
-				
-{** find00: para entender: aqui se forma o doi do view, nessa parte não precisa mudar nada *}
-				
-				
+											
 			{/if}
-
 			{* DOI (requires plugin) *}
 			{foreach from=$pubIdPlugins item=pubIdPlugin}
 				{if $pubIdPlugin->getPubIdType() != 'doi'}
@@ -123,9 +84,6 @@
 				{assign var=pubId value=$article->getStoredPubId($pubIdPlugin->getPubIdType())}
 				{if $pubId}
 					{assign var="doiUrl" value=$pubIdPlugin->getResolvingURL($currentJournal->getId(), $pubId)|escape}
-					
-{** find01: aqui fica e mostra o doi do view *}
-					
 					<section class="item doi">
 						<h2 class="label">
 							{capture assign=translatedDOI}{translate key="plugins.pubIds.doi.readerDisplayName"} do Artigo{/capture}
@@ -137,77 +95,81 @@
 							</a>
 						</span>
 					</section>
+					
+					
+					
+				<button id="toggleButton">DOI complementar</button>
+				<div id="myDiv" style="display:none;">
+				  <style>
+					#toggleButton {
+					  background-color: #4CAF50;
+					  color: white;
+					  padding: 10px 20px;
+					  border: none;
+					  cursor: pointer;
+					}
+				  </style>
 
-					
-{** find02: mudanças a partir daqui. Aqui ficam os pdfs (galley) o original e a tradução, 
-	cada um tem um doi independente do doi do view *}
-					
-					<h4>Arquivo principal e traduções:</h4>
-					
-				
-				<ul class="value galleys_links">
-						{foreach from=$primaryGalleys item=galley}
-						
-						
-							<li>
-								
-							{include file="frontend/objects/galley_link.tpl" parent=$article publication=$publication galley=$galley isSupplementary="1"}
-							<section class="item doi"> 
-					<h2 class="label">
+				 {** <h4>Arquivo principal e traduções:</h4> *}
+				  <ul class="value galleys_links">
+					{foreach from=$primaryGalleys item=galley}
+					  <li>
+						{include file="frontend/objects/galley_link.tpl" parent=$article publication=$publication galley=$galley isSupplementary="1"}
+						<section class="item doi">
+						  <h2 class="label">
 							{capture assign=translatedDOI}DOI{/capture}
-							{translate key="semicolon" label=$translatedDOI} 
-						</h2>
-						
-						{$senha = "senhaa"}
-						
-						<span class="value">
-							
+							{translate key="semicolon" label=$translatedDOI}
+						  </h2>
+						  {$senha = "senhaa"}
+						  <span class="value">
 							<a href="{$doiUrl}.g{$galley->getBestGalleyId()|escape}">
-							
-							
-							
-
-								{$doiUrl}.g{$galley->getBestGalleyId()|escape}
-								
+							  {$doiUrl}.g{$galley->getBestGalleyId()|escape}
 							</a>
-						</span>
-					</section>
-							</li>
-						{/foreach}
-					</ul>
-
-{** find03: aqui ficam os outros arquivos, jpg, png, html, também com doi independente *}
-					
-				
-					<h4>Outros arquivos:</h4>
-										
-					<ul class="value supplementary_galleys_links">
-								{foreach from=$supplementaryGalleys item=galley}
-							<li>
-								{include file="frontend/objects/galley_link.tpl" parent=$article publication=$publication galley=$galley isSupplementary="1"}
-					<section class="item doi 2">
-					<h2 class="label">
-								{capture assign=translatedDOI}{translate key="plugins.pubIds.doi.readerDisplayName"}{/capture}
-								{translate key="semicolon" label=$translatedDOI}
-					</h2>
-						<span class="value">
+						  </span>
+						</section>
+					  </li>
+					{/foreach}
+				  </ul>
+				{**  <h4>Outros arquivos:</h4> *}
+				  <ul class="value supplementary_galleys_links">
+					{foreach from=$supplementaryGalleys item=galley}
+					  <li>
+						{include file="frontend/objects/galley_link.tpl" parent=$article publication=$publication galley=$galley isSupplementary="1"}
+						<section class="item doi 2">
+						  <h2 class="label">
+							{capture assign=translatedDOI}{translate key="plugins.pubIds.doi.readerDisplayName"}{/capture}
+							{translate key="semicolon" label=$translatedDOI}
+						  </h2>
+						  <span class="value">
 							<a href="{$doiUrl}.g{$galley->getBestGalleyId()|escape}">
-								{$doiUrl}.g{$galley->getBestGalleyId()|escape} 
+							  {$doiUrl}.g{$galley->getBestGalleyId()|escape}
 							</a>
-						</span>
-					</section>
-						{/foreach}
-							</li>
-					</ul>
-						
+						  </span>
+						</section>
+					  </li>
+					{/foreach}
+				  </ul>
+				</div>
 
-					
-					
+				<script>
+				  const toggleButton = document.getElementById("toggleButton");
+				  const myDiv = document.getElementById("myDiv");
+
+				  toggleButton.addEventListener("click", function() {
+					if (myDiv.style.display === "none") {
+					  myDiv.style.display = "block";
+					  toggleButton.innerHTML = "Esconder";
+					} else {
+					  myDiv.style.display = "none";
+						toggleButton.innerHTML = "DOI complementar";
+					}
+					});
+					</script>
+
+
 								{/if}
 								{/foreach}
-
-{** find04: não editar nada a partir daqui*}
-
+{** find01: aqui fica e mostra o doi do view *}
 			{* Keywords *}
 			{if !empty($publication->getLocalizedData('keywords'))}
 			<section class="item keywords">
@@ -222,7 +184,6 @@
 				</span>
 			</section>
 			{/if}
-
 			{* Abstract *}
 			{if $publication->getLocalizedData('abstract')}
 				<section class="item abstract">
@@ -230,9 +191,7 @@
 					{$publication->getLocalizedData('abstract')|strip_unsafe_html}
 				</section>
 			{/if}
-
 			{call_hook name="Templates::Article::Main"}
-
 			{* Author biographies *}
 			{assign var="hasBiographies" value=0}
 			{foreach from=$publication->getData('authors') item=author}
@@ -269,7 +228,6 @@
 					{/foreach}
 				</section>
 			{/if}
-
 			{* References *}
 			{if $parsedCitations || $publication->getData('citationsRaw')}
 				<section class="item references">
@@ -287,11 +245,8 @@
 					</div>
 				</section>
 			{/if}
-
 		</div><!-- .main_entry -->
-
 		<div class="entry_details">
-
 			{* Article/Issue cover image *}
 			{if $publication->getLocalizedData('coverImage') || ($issue && $issue->getLocalizedCoverImage())}
 				<div class="item cover_image">
@@ -310,7 +265,6 @@
 					</div>
 				</div>
 			{/if}
-
 			{* Article Galleys *}
 			{if $primaryGalleys}
 				<div class="item galleys">
@@ -340,7 +294,6 @@
 					</ul>
 				</div>
 			{/if}
-
 			{if $publication->getData('datePublished')}
 			<div class="item published">
 				<section class="sub_item">
