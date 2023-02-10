@@ -7,9 +7,22 @@ class relationalDoi extends GenericPlugin {
         $success = parent::register($category, $path);
             if ($success && $this->getEnabled()) {
                HookRegistry::register('TemplateResource::getFilename', array($this, '_overridePluginTemplates'));
+                       HookRegistry::register('TemplateResource::getFilename', array($this, '_overrideDOITemplate'));
             }
         return $success;
     }
+
+
+
+
+
+public function _overrideDOITemplate($hookName, $args) {
+    $templatePath = $args[0];
+    if ($templatePath === 'plugins/pubIds/doi/templates/settingsForm.tpl') {
+        $args[0] = 'plugins/generic/relationalDoi/templates/settingsForm.tpl';
+    }
+    return false;
+}
 
   /**
    * Provide a name for this plugin
@@ -28,6 +41,6 @@ class relationalDoi extends GenericPlugin {
    * enable and disable plugins.
    */
 	public function getDescription() {
-		return __('Este plugin mostra os DOIs de tordos os arquivos de um artigo');
+		return __('Este plugin mostra os DOIs de todos os arquivos de um artigo');
 	}
 }
