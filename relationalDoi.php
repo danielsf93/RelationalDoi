@@ -8,6 +8,8 @@ class relationalDoi extends GenericPlugin {
             if ($success && $this->getEnabled()) {
                HookRegistry::register('TemplateResource::getFilename', array($this, '_overridePluginTemplates'));
                        HookRegistry::register('TemplateResource::getFilename', array($this, '_overrideDOITemplate'));
+                       HookRegistry::register('TemplateResource::getFilename', array($this, '_overrideDOITemplatenovamente'));
+
             }
         return $success;
     }
@@ -23,6 +25,16 @@ public function _overrideDOITemplate($hookName, $args) {
     }
     return false;
 }
+
+
+public function _overrideDOITemplatenovamente($hookName, $args) {
+    $templatePath = $args[0];
+    if ($templatePath === 'plugins/pubIds/doi/templates/doiSuffixEdit.tpl') {
+        $args[0] = 'plugins/generic/relationalDoi/templates/doiSuffixEdit.tpl';
+    }
+    return false;
+}
+
 
   /**
    * Provide a name for this plugin
