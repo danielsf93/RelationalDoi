@@ -82,6 +82,7 @@
 					{continue}
 				{/if}
 				{assign var=pubId value=$article->getStoredPubId($pubIdPlugin->getPubIdType())}
+				
 				{if $pubId}
 					{assign var="doiUrl" value=$pubIdPlugin->getResolvingURL($currentJournal->getId(), $pubId)|escape}
 					<section class="item doi">
@@ -95,8 +96,7 @@
 							</a>
 						</span>
 					</section>
-					
-					
+
 					
 				<button id="toggleButton">DOI complementar</button>
 				<div id="myDiv" style="display:none;">

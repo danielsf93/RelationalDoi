@@ -55,4 +55,11 @@ public function _overrideDOITemplatenovamente($hookName, $args) {
 	public function getDescription() {
 		return __('Este plugin mostra os DOIs de todos os arquivos de um artigo');
 	}
+	
+	
+	
+	
+	
+	
+	
 }
