@@ -12,7 +12,6 @@
 {** aqui permite que se mostre o doi de aruivo*}
 {assign var=enableObjectDoi value=$pubIdPlugin->getSetting($currentContext->getId(), "enable`$pubObjectType`Doi")}
 
-{** a referencia de url doi funcionou ------------------------- porém falta ref do identificador e do galley--------- *}
 
 {assign var="doiUrl" value=$pubIdPlugin->getResolvingURL($currentJournal->getId(), $pubId)|escape}
 
@@ -23,13 +22,14 @@
 		{if $pubIdPlugin->getSetting($currentContext->getId(), 'doiSuffix') == 'customId' || $storedPubId}
 			{if empty($storedPubId)} {* edit custom suffix *}
 				{fbvFormSection}
-    <hr>
+{** inicio DOI manual para cada arquivo **}
+	   
     <p class="pkp_help">{translate key="plugins.pubIds.doi.manager.settings.doiSuffix.description"}</p>
     {fbvElement type="hidden" label="plugins.pubIds.doi.manager.settings.doiPrefix" id="doiPrefix" disabled=true value=$pubIdPlugin->getSetting($currentContext->getId(), 'doiPrefix') size=$fbvStyles.size.SMALL}
     <img src="/plugins/generic/relationalDoi/02.png"></a>
     						
 {fbvElement type="text" label="plugins.pubIds.doi.manager.settings.doiSuffix" id="doiSuffix" value="$doiSuffix.g{$fileId|escape}" size=$fbvStyles.size.MEDIUM}
-    <hr>
+    
     {fbvElement type="hidden" id="doiRepresentationSuffixPattern" value=$doiRepresentationSuffixPattern label="plugins.pubIds.doi.manager.settings.doiSuffixPattern.representations" maxlength="40" inline=true size=$fbvStyles.size.MEDIUM readonly=true}
 
 
@@ -37,116 +37,60 @@
 			
 			
 			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-		
-
-			
-			<br><span class="texto">
-  <b>O DOI deste Arquivo será:</b><br>
-  <b>{$doiUrl|unescape:"html"}{$pubIdPlugin->getSetting($currentContext->getId(), 'doiPrefix')}/ do artigo identificador /{$doiSuffix|unescape:"html"}</b>
-  
-  teste: <br>
-			
-			
-			
-			
-			
-			
-			a{$doiPrefix|unescape:"html"}a<br>
-			b{$doiSuffix|unescape:"html"}b<br>
-			c{$doiUrl|unescape:"html"}c<br>
-			d{$pubIdPlugin->getSetting($currentContext->getId(), 'doiPrefix')}d<br>
-			e{$storedPubId|unescape:"html"}e<br>
-			f<i>{$pubIdPlugin->getPubId($pubObject)|escape}</i>f<br>
-			gu				<p><h3>O DOI deste arquivo é ronaldo: {$pubIdPlugin->getPubId($pubObject)|escape}</h3></p>
-g<br>
-			hh<br>
-							 
-  
-  
-  
-  <br>
-  
-  <b>{$doiSuffix|unescape:"html"}olacolocar o doi do artigo aqui{$doiTableRows|unescape:"html"} ola{$doiUrl|unescape:"html"}{$pubIdPlugin->getSetting($currentContext->getId(), 'doiPrefix')}{$doiSuffix|unescape:"html"}</b>
-</span>
-			
-			
-			
-			
+		<br><span class="texto">
+  <b>O DOI deste Arquivo aqui será:</b><br>
+  <b>{$doiUrl|unescape:"html"}{$pubIdPlugin->getSetting($currentContext->getId(), 'doiPrefix')}/{$doiSuffix|unescape:"html"}(deveria ter o identificador aqui)</b>
+ 		
 				{/fbvFormSection}
+				
 				{if $canBeAssigned}
 					{assign var=templatePath value=$pubIdPlugin->getTemplateResource('doiAssignCheckBox.tpl')}
 					{include file=$templatePath pubId="" pubObjectType=$pubObjectType}
 				{else}
-				<hr>	estou aqui<p class="pkp_help">{translate key="plugins.pubIds.doi.editor.customSuffixMissing"}</p>
+				
+				
+{**  FIM DOI manual para cada arquivo **}
+				
+{** Inicio demonstração do DOI manual para cada arquivo **}
+				
+				
+				<p class="pkp_help">{translate key="plugins.pubIds.doi.editor.customSuffixMissing"}</p>
 				{/if}
 			{else} {* stored pub id and clear option *}
 			{fbvFormSection}
 			
-			
-			
-			
-				<p>
-				 <b>O DOI individual deste Arquivo é:</b><br>
-  <b>{$doiUrl|unescape:"html"}{$pubIdPlugin->getSetting($currentContext->getId(), 'doiPrefix')}/ do artigo identificador /{$doiSuffix|unescape:"html"}</b>
-  <br />
-					
-					
-					
-					
+				
+				 <b>O DOI deste Arquivo aqui é:</b><br>
+  <b>{$doiUrl|unescape:"html"}{$pubIdPlugin->getSetting($currentContext->getId(), 'doiPrefix')}/{$doiSuffix|unescape:"html"}(deveria ter o identificador aqui)</b>
+ 					
 					{capture assign=translatedObjectType}{translate key="plugins.pubIds.doi.editor.doiObjectType"|cat:$pubObjectType}{/capture}
 					{capture assign=assignedMessage}{translate key="plugins.pubIds.doi.editor.assigned" pubObjectType=$translatedObjectType}{/capture}
 					<p class="pkp_help">{$assignedMessage}</p>
 					{include file="linkAction/linkAction.tpl" action=$clearPubIdLinkActionDoi contextId="publicIdentifiersForm"}
-				{$cuzinho = "aberto"}
-				
-				
-				<p><h3>O DOI deste arquivo é joão: {$pubIdPlugin->getPubId($pubObject)|escape}xiua{$cuzinho|escape}ua</h3></p>
-				
-			olanovamente
-				
-				
-				
-				
-				
-				
-				</p>
 				{/fbvFormSection}
+
+{** FIM demonstração do DOI manual para cada arquivo **}
+
+{** inicio mostra o doi dos arquivos que tem composição automática e/ou o doi de artigo é feito manualmente nas configurações de DOI **}
+
 			{/if}
-		{else} {* pub id preview *} aqui se forma o doi de cada  arquivo
-			<p>{$pubIdPlugin->getPubId($pubObject)|escape}</p>
+		{else} {* pub id preview *}
+			<p><b>O DOI deste arquivo é: {$pubIdPlugin->getPubId($pubObject)|escape}</b></p>
 			{if $canBeAssigned}
 				<p class="pkp_help">{translate key="plugins.pubIds.doi.editor.canBeAssigned"}</p>
 				{assign var=templatePath value=$pubIdPlugin->getTemplateResource('doiAssignCheckBox.tpl')}
 				{include file=$templatePath pubId="" pubObjectType=$pubObjectType}
 				
-				<p>{$pubIdPlugin->getPubId($pubObject)|escape}</p>
 			{else}
 				<p class="pkp_help">{translate key="plugins.pubIds.doi.editor.patternNotResolved"}</p>
 			{/if}
 		{/if}
 	{/fbvFormArea}
 {/if}
+
+{** FIM mostra o doi dos arquivos que tem composição automática e/ou o doi de artigo é feito manualmente nas configurações de DOI **}
+
+
 {* issue pub object *}
 {if $pubObjectType == 'Issue'}
 	{assign var=enablePublicationDoi value=$pubIdPlugin->getSetting($currentContext->getId(), "enablePublicationDoi")}
