@@ -34,12 +34,13 @@
 
 
 			ver se grep -r "representationId" funciona
-			
+			ver geany templates/workflow/workflow.tpl
+		
 			
 			
 		<br><span class="texto">
   <b>O DOI deste Arquivo aqui será:</b><br>
-  <b>{$doiUrl|unescape:"html"}{$pubIdPlugin->getSetting($currentContext->getId(), 'doiPrefix')}/{$doiSuffix|unescape:"html"}(deveria ter o identificador aqui)</b>
+  <b>{$doiUrl|unescape:"html"}{$pubIdPlugin->getSetting($currentContext->getId(), 'doiPrefix')}/{$doiSuffix|unescape:"html"}(deveria ter o identificador aqui){$representationId|unescape:"html"}fu{$publicationId|unescape:"html"}i</b>
  		
 				{/fbvFormSection}
 				
