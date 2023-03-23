@@ -120,48 +120,44 @@
 					}
 				  </style>
 
-				 {** <h4>Arquivo principal e traduções:</h4> *}
-				  <ul class="value galleys_links">
-					{foreach from=$primaryGalleys item=galley}<br>
-					  <li>
-						{include file="frontend/objects/galley_link.tpl" parent=$article publication=$publication galley=$galley isSupplementary="1"}
-						<section class="item doi">
-						  <h2 class="label">
-							{capture assign=translatedDOI}DOI{/capture}
-							{translate key="semicolon" label=$translatedDOI}
-						  </h2>
-						
-						  <span class="value">
-							<a href="{($galley->getStoredPubId('doi'))}">
-							{($galley->getStoredPubId('doi'))}
-							</a>
-
-
-
-						  </span>
-						</section>
-					  </li>
-					{/foreach}
-				  </ul>
-				{**  <h4>Outros arquivos:</h4> *}
-				  <ul class="value supplementary_galleys_links">
-					{foreach from=$supplementaryGalleys item=galley}
-					  <li>
-						{include file="frontend/objects/galley_link.tpl" parent=$article publication=$publication galley=$galley isSupplementary="1"}
-						<section class="item doi 2">
-						  <h2 class="label">
-							{capture assign=translatedDOI}{translate key="plugins.pubIds.doi.readerDisplayName"}{/capture}
-							{translate key="semicolon" label=$translatedDOI}
-						  </h2>
-						  <span class="value">
-						  <a href="{($galley->getStoredPubId('doi'))}">
-						  {($galley->getStoredPubId('doi'))}
-						  </a>
-						  </span>
-						</section>
-					  </li>
-					{/foreach}
-				  </ul>
+{** <h4>Arquivo principal e traduções:</h4> *}
+				<ul class="value galleys_links">
+				{foreach from=$primaryGalleys item=galley}
+					{if !empty($galley->getStoredPubId('doi'))}
+						<li>
+							{include file="frontend/objects/galley_link.tpl" parent=$article publication=$publication galley=$galley isSupplementary="1"}
+							<section class="item doi">
+								<h2 class="label">
+									{capture assign=translatedDOI}DOI{/capture}
+									{translate key="semicolon" label=$translatedDOI}
+								</h2>
+								<a href="https://doi.org/{($galley->getStoredPubId('doi'))}">
+								https://doi.org/{($galley->getStoredPubId('doi'))}
+								</a>
+							</section>
+						</li>
+					{/if}
+				{/foreach}
+				</ul>
+{**  <h4>Outros arquivos:</h4> *}
+								<ul class="value supplementary_galleys_links">
+								{foreach from=$supplementaryGalleys item=galley}
+					{if !empty($galley->getStoredPubId('doi'))}
+						<li>
+							{include file="frontend/objects/galley_link.tpl" parent=$article publication=$publication galley=$galley isSupplementary="1"}
+							<section class="item doi">
+								<h2 class="label">
+									{capture assign=translatedDOI}DOI{/capture}
+									{translate key="semicolon" label=$translatedDOI}
+								</h2>
+								<a href="https://doi.org/{($galley->getStoredPubId('doi'))}">
+								https://doi.org/{($galley->getStoredPubId('doi'))}
+								</a>
+							</section>
+						</li>
+					{/if}
+				{/foreach}
+				</ul>
 				</div>
 
 				<script>
@@ -182,10 +178,6 @@
 
 								{/if}
 								{/foreach}
-
-
-
-
 								
 {** find01: aqui fica e mostra o doi do view *}
 			{* Keywords *}
