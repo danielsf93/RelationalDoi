@@ -154,9 +154,9 @@
 							{translate key="semicolon" label=$translatedDOI}
 						  </h2>
 						  <span class="value">
-							<a href="{$doiUrl}.g{$galley->getBestGalleyId()|escape}">
-							  {$doiUrl}.g{$galley->getBestGalleyId()|escape}
-							</a>
+						  <a href="{($galley->getStoredPubId('doi'))}">
+						  {($galley->getStoredPubId('doi'))}
+						  </a>
 						  </span>
 						</section>
 					  </li>
