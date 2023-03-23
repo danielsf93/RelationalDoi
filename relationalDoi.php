@@ -7,33 +7,19 @@ class relationalDoi extends GenericPlugin {
         $success = parent::register($category, $path);
             if ($success && $this->getEnabled()) {
                HookRegistry::register('TemplateResource::getFilename', array($this, '_overridePluginTemplates'));
-                       HookRegistry::register('TemplateResource::getFilename', array($this, '_overrideDOITemplate'));
-                       HookRegistry::register('TemplateResource::getFilename', array($this, '_overrideDOITemplatenovamente'));
 
             }
         return $success;
     }
-
-
-
-
-
-public function _overrideDOITemplate($hookName, $args) {
-    $templatePath = $args[0];
-    if ($templatePath === 'plugins/pubIds/doi/templates/settingsForm.tpl') {
-        $args[0] = 'plugins/generic/relationalDoi/templates/settingsForm.tpl';
+    public function _overridePluginTemplates($hookName, $args) {
+        $templatePath = $args[0];
+        if ($templatePath === 'templates/frontend/objects/article_details.tpl') {
+            $args[0] = 'plugins/generic/relationalDoi/templates/frontend/objects/article_details.tpl';
+        }
+        return false;
     }
-    return false;
-}
 
 
-public function _overrideDOITemplatenovamente($hookName, $args) {
-    $templatePath = $args[0];
-    if ($templatePath === 'plugins/pubIds/doi/templates/doiSuffixEdit.tpl') {
-        $args[0] = 'plugins/generic/relationalDoi/templates/doiSuffixEdit.tpl';
-    }
-    return false;
-}
 
 
   /**
