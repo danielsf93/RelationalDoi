@@ -107,58 +107,77 @@
 
 
 
+					<button id="toggleButton">DOI complementar</button>
+					<div id="myDiv" style="display:none;">
+					  <style>
+						#toggleButton {
+						  background-color: #4CAF50;
+						  color: white;
+						  padding: 10px 20px;
+						  border: none;
+						  cursor: pointer;
+						}
+					  </style>
 					
-				<button id="toggleButton">DOI complementar</button>
-				<div id="myDiv" style="display:none;">
-				  <style>
-					#toggleButton {
-					  background-color: #4CAF50;
-					  color: white;
-					  padding: 10px 20px;
-					  border: none;
-					  cursor: pointer;
-					}
-				  </style>
+					  <h4>Arquivo principal e traduções:</h4> 
+					  {assign var="doiComplementarEncontrado" value=false}
+					  <ul class="value galleys_links">
+						{foreach from=$primaryGalleys item=galley}
+						  {if !empty($galley->getStoredPubId('doi'))}
+							{assign var="doiComplementarEncontrado" value=true}
+							<li>
+							  {include file="frontend/objects/galley_link.tpl" parent=$article publication=$publication galley=$galley isSupplementary="1"}
+							  <section class="item doi">
+								<h2 class="label">
+								  {capture assign=translatedDOI}DOI{/capture}
+								  {translate key="semicolon" label=$translatedDOI}
+								</h2>
+								<a href="https://doi.org/{($galley->getStoredPubId('doi'))}">
+								  https://doi.org/{($galley->getStoredPubId('doi'))}
+								</a>
+							  </section>
+							</li>
+						  {/if}
+						{/foreach}
+						{if !$doiComplementarEncontrado}
+						  <li>
+							Sem DOI complementar. Utilize o DOI do Artigo <a href="{$doiUrl}"> {$doiUrl} </a>
+						  </li>
+						{/if}
+					  </ul>
+					
+					  <h4>Outros arquivos:</h4>
+					  {assign var="doiComplementarEncontrado" value=false}
+					  <ul class="value supplementary_galleys_links">
+						{foreach from=$supplementaryGalleys item=galley}
+						  {if !empty($galley->getStoredPubId('doi'))}
+							{assign var="doiComplementarEncontrado" value=true}
+							<li>
+							  {include file="frontend/objects/galley_link.tpl" parent=$article publication=$publication galley=$galley isSupplementary="1"}
+							  <section class="item doi">
+								<h2 class="label">
+								  {capture assign=translatedDOI}DOI{/capture}
+								  {translate key="semicolon" label=$translatedDOI}
+								</h2>
+								<a href="https://doi.org/{($galley->getStoredPubId('doi'))}">
+								  https://doi.org/{($galley->getStoredPubId('doi'))}
+								</a>
+							  </section>
+							</li>
+						  {/if}
+						{/foreach}
+						{if !$doiComplementarEncontrado}
+						  <li>
+						  Sem DOI complementar. Utilize o DOI do Artigo <a href="{$doiUrl}"> {$doiUrl} </a>
+						  </li>
+						{/if}
+					  </ul>
+					
+					</div>
 
-{** <h4>Arquivo principal e traduções:</h4> *}
-				<ul class="value galleys_links">
-				{foreach from=$primaryGalleys item=galley}
-					{if !empty($galley->getStoredPubId('doi'))}
-						<li>
-							{include file="frontend/objects/galley_link.tpl" parent=$article publication=$publication galley=$galley isSupplementary="1"}
-							<section class="item doi">
-								<h2 class="label">
-									{capture assign=translatedDOI}DOI{/capture}
-									{translate key="semicolon" label=$translatedDOI}
-								</h2>
-								<a href="https://doi.org/{($galley->getStoredPubId('doi'))}">
-								https://doi.org/{($galley->getStoredPubId('doi'))}
-								</a>
-							</section>
-						</li>
-					{/if}
-				{/foreach}
-				</ul>
-{**  <h4>Outros arquivos:</h4> *}
-								<ul class="value supplementary_galleys_links">
-								{foreach from=$supplementaryGalleys item=galley}
-					{if !empty($galley->getStoredPubId('doi'))}
-						<li>
-							{include file="frontend/objects/galley_link.tpl" parent=$article publication=$publication galley=$galley isSupplementary="1"}
-							<section class="item doi">
-								<h2 class="label">
-									{capture assign=translatedDOI}DOI{/capture}
-									{translate key="semicolon" label=$translatedDOI}
-								</h2>
-								<a href="https://doi.org/{($galley->getStoredPubId('doi'))}">
-								https://doi.org/{($galley->getStoredPubId('doi'))}
-								</a>
-							</section>
-						</li>
-					{/if}
-				{/foreach}
-				</ul>
-				</div>
+
+
+
 
 				<script>
 				  const toggleButton = document.getElementById("toggleButton");
